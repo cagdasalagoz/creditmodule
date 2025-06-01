@@ -1,0 +1,303 @@
+{
+  "collection": {
+    "info": {
+      "_postman_id": "c7374425-c2fa-4603-aa2b-cd11367f2d10",
+      "name": "creditmodule",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "updatedAt": "2025-06-01T11:46:50.000Z",
+      "createdAt": "2025-05-28T09:58:10.000Z",
+      "lastUpdatedBy": "8845584",
+      "uid": "8845584-c7374425-c2fa-4603-aa2b-cd11367f2d10"
+    },
+    "item": [
+      {
+        "name": "Create Loan (ADMIN Only)",
+        "id": "10a79f67-d4c5-4778-a535-b6a25d1dbdf9",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"customerId\": 2,\n    \"amount\": 1000.00,\n    \"numberOfInstallments\": 12,\n    \"interestRate\": 0.1\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/api/loans",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "api",
+              "loans"
+            ]
+          }
+        },
+        "response": [],
+        "uid": "8845584-10a79f67-d4c5-4778-a535-b6a25d1dbdf9"
+      },
+      {
+        "name": "List Loans",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "c90765f2-c990-4f74-85a4-de2bbe3523e2",
+              "exec": [
+                "var template = `",
+                "<style type=\"text/css\">",
+                "    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+                "    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+                "    .tftable tr {background-color:#ffffff;}",
+                "    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+                "    .tftable tr:hover {background-color:#e0ffff;}",
+                "</style>",
+                "",
+                "<table class=\"tftable\" border=\"1\">",
+                "    <tr>",
+                "        <th>ID</th>",
+                "        <th>Customer ID</th>",
+                "        <th>Customer Name</th>",
+                "        <th>Customer Surname</th>",
+                "        <th>Loan Amount</th>",
+                "        <th>Total Loan Amount with Interest</th>",
+                "        <th>Interest Rate</th>",
+                "        <th>Number of Installments</th>",
+                "        <th>Create Date</th>",
+                "        <th>Installments</th>",
+                "        <th>Paid</th>",
+                "    </tr>",
+                "    ",
+                "    {{#each response}}",
+                "        <tr>",
+                "            <td>{{id}}</td>",
+                "            <td>{{customerId}}</td>",
+                "            <td>{{customerName}}</td>",
+                "            <td>{{customerSurname}}</td>",
+                "            <td>{{loanAmount}}</td>",
+                "            <td>{{totalLoanAmountWithInterest}}</td>",
+                "            <td>{{interestRate}}</td>",
+                "            <td>{{numberOfInstallments}}</td>",
+                "            <td>{{createDate}}</td>",
+                "            <td>",
+                "                <table>",
+                "                    <tr>",
+                "                        <th>ID</th>",
+                "                        <th>Loan ID</th>",
+                "                        <th>Amount</th>",
+                "                        <th>Paid Amount</th>",
+                "                        <th>Due Date</th>",
+                "                        <th>Payment Date</th>",
+                "                        <th>Paid</th>",
+                "                    </tr>",
+                "                    {{#each installments}}",
+                "                        <tr>",
+                "                            <td>{{id}}</td>",
+                "                            <td>{{loanId}}</td>",
+                "                            <td>{{amount}}</td>",
+                "                            <td>{{paidAmount}}</td>",
+                "                            <td>{{dueDate}}</td>",
+                "                            <td>{{paymentDate}}</td>",
+                "                            <td>{{paid}}</td>",
+                "                        </tr>",
+                "                    {{/each}}",
+                "                </table>",
+                "            </td>",
+                "            <td>{{paid}}</td>",
+                "        </tr>",
+                "    {{/each}}",
+                "</table>",
+                "`;",
+                "",
+                "function constructVisualizerPayload() {",
+                "    return { response: pm.response.json() }",
+                "}",
+                "",
+                "pm.visualizer.set(template, constructVisualizerPayload());"
+              ],
+              "type": "text/javascript",
+              "packages": {}
+            }
+          }
+        ],
+        "id": "4334d43f-9aa6-4fb0-8220-55634328e4ab",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/api/loans?customerId=2&numberOfInstallments=6&isPaid=false",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "api",
+              "loans"
+            ],
+            "query": [
+              {
+                "key": "customerId",
+                "value": "2"
+              },
+              {
+                "key": "numberOfInstallments",
+                "value": "6"
+              },
+              {
+                "key": "isPaid",
+                "value": "false"
+              }
+            ]
+          }
+        },
+        "response": [],
+        "uid": "8845584-4334d43f-9aa6-4fb0-8220-55634328e4ab"
+      },
+      {
+        "name": "Get Loan Details",
+        "id": "cca70e99-6588-4efd-8d0e-8f0e51a473d8",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/api/loans/1",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "api",
+              "loans",
+              "1"
+            ]
+          }
+        },
+        "response": [],
+        "uid": "8845584-cca70e99-6588-4efd-8d0e-8f0e51a473d8"
+      },
+      {
+        "name": "List Installments for Loan",
+        "id": "7c18663a-01d6-4e68-8434-f235598943c3",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/api/loans/1/installments",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "api",
+              "loans",
+              "1",
+              "installments"
+            ]
+          }
+        },
+        "response": [],
+        "uid": "8845584-7c18663a-01d6-4e68-8434-f235598943c3"
+      },
+      {
+        "name": "Pay Loan",
+        "id": "63b25d61-1147-458f-a263-476eb4e2d006",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"amount\": 100.00\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/api/loans/1/pay",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "api",
+              "loans",
+              "1",
+              "pay"
+            ]
+          }
+        },
+        "response": [],
+        "uid": "8845584-63b25d61-1147-458f-a263-476eb4e2d006"
+      }
+    ],
+    "auth": {
+      "type": "basic",
+      "basic": [
+        {
+          "key": "username",
+          "value": "{{CURRENT_USERNAME}}",
+          "type": "string"
+        },
+        {
+          "key": "password",
+          "value": "{{CURRENT_PASSWORD}}",
+          "type": "string"
+        }
+      ]
+    },
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "42286eba-077b-4490-b829-e07e7b03d6ee",
+          "type": "text/javascript",
+          "exec": [
+            ""
+          ]
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "362c914c-3892-4fb7-bbe4-7afb1aeb0fdc",
+          "type": "text/javascript",
+          "exec": [
+            ""
+          ]
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:8080",
+        "type": "string"
+      },
+      {
+        "key": "CURRENT_USERNAME",
+        "value": "admin",
+        "type": "string"
+      },
+      {
+        "key": "CURRENT_PASSWORD",
+        "value": "password",
+        "type": "string"
+      }
+    ]
+  }
+}
